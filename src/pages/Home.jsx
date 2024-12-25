@@ -1,5 +1,7 @@
 import { useState, startTransition, Suspense, lazy } from "react";
-import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from "@/components/ui/menubar";
+import { Bell, Wallet } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ModeToggle } from "@/components/ModeToggle";
 
 const Dashboard = lazy(() => import("../components/Dashboard"));
 const ProjectInfo = lazy(() => import("@/pages/ProjectInfo"));
@@ -9,11 +11,11 @@ const TradingPanel = lazy(() => import("../components/TradingPanel"));
 const WalletConnect = lazy(() => import("../components/WalletConnect"));
 
 const Home = () => {
-  const [activeComponent, setActiveComponent] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("dashboard");
 
-  const handleMenuChange = (component) => {
+  const handleTabChange = (tab) => {
     startTransition(() => {
-      setActiveComponent(component);
+      setActiveTab(tab);
     });
   };
 
@@ -24,64 +26,64 @@ const Home = () => {
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">Token Management</h1>
+            <div className="flex gap-4">
+              <ModeToggle />
+              <Bell className="cursor-pointer" />
+              <Wallet className="cursor-pointer" />
+            </div>
           </header>
 
-          <Menubar>
-            {/* Main Options */}
-            <MenubarMenu>
-              <MenubarTrigger>Dashboard</MenubarTrigger>
-              <MenubarContent>
-                <MenubarItem onClick={() => handleMenuChange("dashboard")}>
-                  Overview
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
+          <Tabs defaultValue={activeTab}>
+            <TabsList className="w-full">
+              <TabsTrigger
+                value="dashboard"
+                onClick={() => handleTabChange("dashboard")}
+              >
+                Dashboard
+              </TabsTrigger>
+              <TabsTrigger
+                value="airdrop"
+                onClick={() => handleTabChange("airdrop")}
+              >
+                Airdrop Info
+              </TabsTrigger>
+              <TabsTrigger
+                value="refferal"
+                onClick={() => handleTabChange("refferal")}
+              >
+                Refferal
+              </TabsTrigger>
+              <TabsTrigger
+                value="tasks"
+                onClick={() => handleTabChange("tasks")}
+              >
+                Tasks
+              </TabsTrigger>
+              <TabsTrigger
+                value="trade"
+                onClick={() => handleTabChange("trade")}
+              >
+                Trading Panel
+              </TabsTrigger>
+              <TabsTrigger
+                value="wallet"
+                onClick={() => handleTabChange("wallet")}
+              >
+                Wallet Connect
+              </TabsTrigger>
+            </TabsList>
 
-            <MenubarMenu>
-              <MenubarTrigger>Airdrop</MenubarTrigger>
-              <MenubarContent>
-                <MenubarItem onClick={() => handleMenuChange("airdrop")}>
-                  Airdrop Info
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
-
-            <MenubarMenu>
-              <MenubarTrigger>Referral</MenubarTrigger>
-              <MenubarContent>
-                <MenubarItem onClick={() => handleMenuChange("refferal")}>
-                  Referral System
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
-
-            <MenubarMenu>
-              <MenubarTrigger>More</MenubarTrigger>
-              <MenubarContent>
-                <MenubarItem onClick={() => handleMenuChange("tasks")}>
-                  Tasks & Rewards
-                </MenubarItem>
-                <MenubarItem onClick={() => handleMenuChange("trade")}>
-                  Trading Panel
-                </MenubarItem>
-                <MenubarItem onClick={() => handleMenuChange("wallet")}>
-                  Wallet Connect
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
-          </Menubar>
-
-          {/* Dynamic Content */}
-          <div className="mt-6">
-            <Suspense fallback={<div>Loading...</div>}>
-              {activeComponent === "dashboard" && <Dashboard />}
-              {activeComponent === "airdrop" && <ProjectInfo />}
-              {activeComponent === "refferal" && <ReferralSystem />}
-              {activeComponent === "tasks" && <TasksAndRewards />}
-              {activeComponent === "trade" && <TradingPanel />}
-              {activeComponent === "wallet" && <WalletConnect />}
-            </Suspense>
-          </div>
+            <TabsContent value={activeTab}>
+              <Suspense fallback={<div>Loading...</div>}>
+                {activeTab === "dashboard" && <Dashboard />}
+                {activeTab === "airdrop" && <ProjectInfo />}
+                {activeTab === "refferal" && <ReferralSystem />}
+                {activeTab === "tasks" && <TasksAndRewards />}
+                {activeTab === "trade" && <TradingPanel />}
+                {activeTab === "wallet" && <WalletConnect />}
+              </Suspense>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>

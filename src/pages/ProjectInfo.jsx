@@ -1,6 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTheme } from "@/context/ThemeProvider";
 
 const ProjectInfo = () => {
+  const { theme } = useTheme();
+  const darkMode = theme === "dark";
+
   const projectData = {
     name: "Token Project",
     listingDate: "2024-01-01",
@@ -9,7 +13,11 @@ const ProjectInfo = () => {
   };
 
   return (
-    <Card className="w-full">
+    <Card
+      className={`w-full ${
+        darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+      }`}
+    >
       <CardHeader>
         <CardTitle>Project Information</CardTitle>
       </CardHeader>
@@ -33,7 +41,11 @@ const ProjectInfo = () => {
               href={projectData.whitePaper}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
+              className={`${
+                darkMode
+                  ? "text-blue-400 hover:text-blue-300"
+                  : "text-blue-600 hover:underline"
+              }`}
             >
               View White Paper
             </a>
