@@ -1,9 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
-// Context for global state management
 const AppContext = createContext();
 
-// Custom hook for using app context
 const useApp = () => {
   const context = useContext(AppContext);
   if (!context) {
@@ -12,7 +10,6 @@ const useApp = () => {
   return context;
 };
 
-// App Provider component
 const AppProvider = ({ children }) => {
   const [balance, setBalance] = useState(1000);
   const [hideBalance, setHideBalance] = useState(false);

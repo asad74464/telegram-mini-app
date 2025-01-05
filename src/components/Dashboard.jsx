@@ -3,6 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "react-toastify";
 import { useTheme } from "@/context/ThemeProvider";
+import hamster from "../assets/images/hamster-exchange.png";
 
 const Dashboard = () => {
   const { theme } = useTheme();
@@ -39,27 +40,29 @@ const Dashboard = () => {
               </span>
             </div>
             <p className="mt-2">Claim tokens every 24 hours.</p>
-            <button
-              onClick={() => {
-                if (claimRewards()) {
-                  toast.success("Claimed successfully!", {
-                    position: "top-left",
-                  });
-                }
-              }}
-              disabled={!canClaim()}
-              className={`w-full p-3 rounded-lg ${
-                canClaim()
-                  ? darkMode
-                    ? "bg-blue-500 text-white hover:bg-blue-400"
-                    : "bg-blue-600 text-white hover:bg-blue-500"
-                  : darkMode
-                  ? "bg-gray-700 text-gray-400"
-                  : "bg-gray-300 text-gray-500"
-              }`}
-            >
-              Claim Daily Rewards
-            </button>
+            <div className="flex items-center justify-center">
+              <button
+                onClick={() => {
+                  if (claimRewards()) {
+                    toast.success("Claimed successfully!", {
+                      position: "top-left",
+                    });
+                  }
+                }}
+                disabled={!canClaim()}
+                className={`flex items-center justify-center rounded-full transition-all ${
+                  canClaim()
+                    ? "hover:scale-110 shadow-lg"
+                    : "opacity-50 cursor-not-allowed"
+                }`}
+              >
+                <img
+                  src={hamster}
+                  alt="Claim Rewards"
+                  className="object-cover rounded-full w-44 h-44 p-3"
+                />
+              </button>
+            </div>
           </div>
         </CardContent>
       </Card>
